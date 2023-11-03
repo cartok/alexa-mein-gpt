@@ -1,0 +1,90 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "mein g. p. t.",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": [
+                        "pause",
+                        "halt",
+                        "warte",
+                        "abbrechen",
+                        "abbruch"
+                    ]
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": [
+                        "hilfe"
+                    ]
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": [
+                        "aus",
+                        "beenden"
+                    ]
+                },
+                {
+                    "name": "ChatIntent",
+                    "slots": [
+                        {
+                            "name": "input",
+                            "type": "AMAZON.SearchQuery",
+                            "samples": [
+                                "{input}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "frage {input}",
+                        "chat {input}",
+                        "g. p. t. {input}"
+                    ]
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                }
+            ],
+            "types": []
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "ChatIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "input",
+                            "type": "AMAZON.SearchQuery",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.395402514964.157368168938"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "delegationStrategy": "ALWAYS"
+        },
+        "prompts": [
+            {
+                "id": "Elicit.Slot.395402514964.157368168938",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Wie lautet deine Nachricht?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "Ja?"
+                    }
+                ]
+            }
+        ]
+    }
+}
