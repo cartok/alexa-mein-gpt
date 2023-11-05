@@ -1,6 +1,6 @@
 # Alexa - Mein GPT
 
-Dies ist nur eine Kopie eines Alexa-hosted skills, den ich in einer Projekt-Woche einer Weiterbildung (AI mit Python) erstellt habe. Das Projekt sollte umgezogen werden und eigenes CI/CD bekommen, damit eigene AWS resourcen anständig verwendet werden können und man bessere Kontrolle über den code hat. Desweiteren kann man bei Alexa-hosted skills keine Umgebungsvariablen setzen, wesshalb ich für den upload den API Key für OpenAI entfernen musste (s. `lambda/chat_gpt.py`).
+Dies ist nur eine Kopie eines Alexa-hosted skills, den ich in einer Projekt-Woche einer Weiterbildung (AI mit Python) erstellt habe und soll einen Blick darauf geben wie ich arbeite und denke. Das Projekt sollte umgezogen werden und eigenes CI/CD bekommen, damit eigene AWS resourcen anständig verwendet werden können und man bessere Kontrolle über den code hat. Desweiteren kann man bei Alexa-hosted skills keine Umgebungsvariablen setzen, wesshalb ich für den upload den API Key für OpenAI entfernen musste (s. `lambda/chat_gpt.py`).
 
 Der Skill ist dazu da, um ChatGPT mit Alexa nutzen zu können. Es gibt bereits einige ziemlich ausgereifte Skills dieser Art, dies ist nur ein Versuch Python ein wenig kennenzulernen und etwas mit Alexa und AI zu machen. Ich werde den Skill nicht veröffentlichen. Dazu wären alle unten aufgeführten TODOs notwendig und noch mehr (API Key Registrierung oder SSO wenn das reicht). Außerdem sollte der Skill dann zumindest Englisch unterstützen, d.h. i18n müsste generell implementiert werden. Eventuell würde ich auch ein Feature entwickeln, mit dem Benutzer einfach Feedback zu fehlenden Ausdrücken geben können, damit sie wissen, dass etwas passieren wird. Das müsste aber gegen Missbrauch abgesichert werden. Ich müsste schauen, was es in der Richtung gerade gibt. Zumindest sollte man den Nutzer darüber informieren, dass der Skill anhand der Logdaten kontinuierlich verbessert wird. Dazu ist es notwendig, die Logs selbstständig im eigenen AWS Account zu speichern (CloudWatch Logs) und weitere Vorkehrungen zu treffen.
 
@@ -10,7 +10,7 @@ Für den Anfang bleibt es bei diesem Skill zunächst bei einem Befehl (`Intent`)
 
 - `g. p. t. {input}`: "\[Computer\] \[öffne|starte\] \[GPT\] - \[GPT\]: {Wie hoch ist die Wasserkuppe}"
 - `frage {input}`: "\[Computer\] \[öffne|starte\] \[GPT\] - \[Frage\]: {Was soll ich morgen machen}"
-- `chat {input}`: "\[Computer\] \[frage\] \[GPT\] \[Chat\] - {Kannst du mir sagen was da los ist}"
+- `chat {input}`: "\[Computer\] \[öffne|starte\] \[GPT\] - \[Chat\]: {Wo ist vorne und wo ist hinten}"
 
 Durch testen ist mir aufgefallen, dass man trotzdessen was dokumentiert ist, Alexa dazu bringen kann den `launch intent handler` zu überschreiten und direkt einen `intent handler` anzusteuern. Das funktioniert aber **nicht systematisch**: "\[Computer\] \[starte\] \[GPT\] **und** \[frage\] {...}".
 
@@ -47,7 +47,7 @@ Es ist mir auch aufgefallen, dass andere Skills mit ähnlichen `skill invocation
 
 - S
   - 8 Sekunden timeout error handling. Zumindest schon mal "Beendet" sagen, damit klar ist wie der Status ist.
-    - Das ist etwas womit Alexa es meiner Meinung nacht übertrieben hat auf Teufel komm raus, pseudo Intelligenz gebaut, nicht toll. Nutzer sollten das Produkt nicht erst studieren müssen, aber die Herausforderung ist natürlich groß, da man, ultimativ gesehen, nur Sprache als Benutzerschnittstelle hat. Der Nutzer sollte informiert werden warum er keine Antwort kriegen konnte und wie er die App in Zukunft besser benutzen kann. Das kann zum Beispiel durch vorheriges definieren von Kontext geschehen. Es hilft wenn ich um Beispiel Sage "Es geht um JS Frontend Frameworks. <Frage/Anweisung>". Ich sollte einen Intent hinzufügen (später neuer smarter entry point für Themen) mit dem man eine Nachricht zum definieren des Kontexts senden kann. Dieser wird automatisch die Anweisung angehangen, nicht zu antworten, oder man sendet die Nachricht mit `max_tokens = 0` oder `n = 0`. Im Fehlerfall, wird der Nutzter dazu aufgefordert die zugehörige `utterance` zu verwenden. 
+    - Das ist etwas womit Alexa es meiner Meinung nach übertrieben hat auf Teufel komm raus, pseudo Intelligenz gebaut, nicht toll. Nutzer sollten das Produkt nicht erst studieren müssen, aber die Herausforderung ist natürlich groß, da man, ultimativ gesehen, nur Sprache als Benutzerschnittstelle hat. Der Nutzer sollte informiert werden warum er keine Antwort kriegen konnte und wie er die App in Zukunft besser benutzen kann. Das kann zum Beispiel durch vorheriges definieren von Kontext geschehen. Es hilft wenn ich um Beispiel Sage "Es geht um JS Frontend Frameworks. <Frage/Anweisung>". Ich sollte einen Intent hinzufügen (Später neuer smarter entry point für Themen) mit dem man eine Nachricht zum definieren des Kontexts senden kann. Dieser wird automatisch die Anweisung angehangen, nicht zu antworten, oder man sendet die Nachricht mit `max_tokens = 0` oder `n = 0`. Im Fehlerfall, wird der Nutzter dazu aufgefordert die zugehörige `utterance` zu verwenden. 
   - Es sollte möglich sein bewusst einzelne Fragen stellen zu können mit dem Wissen, dass der Skill danach direkt beendet wird.
   - Auto delegation und Reprompting fixen, ggf. auf NodeJS umsteigen, falls das hilft. Hat sowieso einige Vorteile.
 - A
@@ -76,5 +76,6 @@ Es ist mir auch aufgefallen, dass andere Skills mit ähnlichen `skill invocation
   - Auf für mehrere Nutzer verwendbar machen. Einfache Bedienung!
   - Chats per AI in grobe Themen einordnen und darüber ansteuerbar machen
   - Themen erstellbar machen, wie zum Beispiel "Kochen" und es ermöglichen chats darin einzuordnen
+  - PEAK: Dem Nutzer ermöglichen eine Hilfe von ChatGPT zu bekommen um eine Kontextbasierte Erklärung welche sehr kurz gehalten ist zu bekommen, indem ich eine lange Feature-Definition (Länger als die App Description) gebe welche es dann verwendet um die Frage des Nutzers zur Nutzung der App zu beantworten. Ich denke das wäre revolutionär, wenn es gut funktioniert!
 - D
   - Für die Erfahrung einen Webservice erstellen, hosten, verwenden und ggf. JS SDK und bun als runtime verwenden (refactoring)
