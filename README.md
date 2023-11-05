@@ -46,9 +46,10 @@ Es ist mir auch aufgefallen, dass andere Skills mit ähnlichen `skill invocation
 ## TODOs (in Reihenfolge)
 
 - S
-  - 8 Sekunden timeout error handling. Zumindest schon mal "Beendet" sagen, damit klar ist wie der status ist.
-    - Das ist etwas womit Alexa es meiner Meinung nacht übertrieben hat auf Teufel komm raus, pseudo Intelligenz gebaut, nicht toll. Nutzer sollten das Produkt nicht erst studieren müssen, aber die Herausforderung ist natürlich groß, da man, ultimativ gesehen, nur Sprache als Benutzerschnittstelle hat.
-  - Es sollte möglich sein bewusst einzelne Fragen stellen zu können mit dem wissen, dass der Skill danach direkt beendet wird.
+  - 8 Sekunden timeout error handling. Zumindest schon mal "Beendet" sagen, damit klar ist wie der Status ist.
+    - Das ist etwas womit Alexa es meiner Meinung nacht übertrieben hat auf Teufel komm raus, pseudo Intelligenz gebaut, nicht toll. Nutzer sollten das Produkt nicht erst studieren müssen, aber die Herausforderung ist natürlich groß, da man, ultimativ gesehen, nur Sprache als Benutzerschnittstelle hat. Der Nutzer sollte informiert werden warum er keine Antwort kriegen konnte und wie er die App in Zukunft besser benutzen kann. Das kann zum Beispiel durch vorheriges definieren von Kontext geschehen. Es hilft wenn ich um Beispiel Sage "Es geht um JS Frontend Frameworks. <Frage/Anweisung>". Ich sollte einen Intent hinzufügen (später neuer smarter entry point für Themen) mit dem man eine Nachricht zum definieren des Kontexts senden kann. Dieser wird automatisch die Anweisung angehangen, nicht zu antworten, oder man sendet die Nachricht mit `max_tokens = 0` oder `n = 0`. Im Fehlerfall, wird der Nutzter dazu aufgefordert die zugehörige `utterance` zu verwenden. 
+  - Es sollte möglich sein bewusst einzelne Fragen stellen zu können mit dem Wissen, dass der Skill danach direkt beendet wird.
+  - Auto delegation und Reprompting fixen, ggf. auf NodeJS umsteigen, falls das hilft. Hat sowieso einige Vorteile.
 - A
   - `poetry` ausprobieren. Vielleicht hat man damit weniger Probleme mit falschen Paket Versionen und man kann scripte erstellen, ansonsten ggf. einfach `package.json` und `bun`.
   - Umziehen auf eigenes git damit man gescheit mit der git history arbeiten kann und um eigenes AWS zu verwenden, erstmal nur lambda, CI/CD.
