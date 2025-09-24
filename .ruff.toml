@@ -1,0 +1,6 @@
+line-length = 100
+indent-width = 2
+target-version = "py37"
+
+[lint]
+unfixable = ["F401"]

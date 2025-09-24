@@ -1,0 +1,12 @@
+starte mein gpt und frage wie weit der mond von der erde entfernt ist
+  VS (schneller, kein timeout)
+starte mein gpt
+frage wie weit ist der mond von der erde entfernt
+
+frage und wie weit ist er von der sonne entfernt
+  VS (viel schneller, kein timeout)
+frage und wie weit ist der mond von der sonne entfernt
+
+frage und welcher von denen von mir genannten planeten ist am groessten
+  VS (ungenaues ergebnis)
+frage und welcher von denen genannten planeten ist am groessten
