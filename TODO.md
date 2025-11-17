@@ -1,0 +1,34 @@
+## TODOs (in Reihenfolge)
+
+- S
+  - 8 Sekunden timeout error handling. Zumindest schon mal "Beendet" sagen, damit klar ist wie der status ist.
+    - Das ist etwas womit Alexa es meiner Meinung nacht übertrieben hat auf Teufel komm raus, pseudo Intelligenz gebaut, nicht toll. Nutzer sollten das Produkt nicht erst studieren müssen, aber die Herausforderung ist natürlich groß, da man, ultimativ gesehen, nur Sprache als Benutzerschnittstelle hat.
+  - Es sollte möglich sein bewusst einzelne Fragen stellen zu können mit dem wissen, dass der Skill danach direkt beendet wird.
+- A
+  - `poetry` ausprobieren. Vielleicht hat man damit weniger Probleme mit falschen Paket Versionen und man kann scripte erstellen, ansonsten ggf. einfach `package.json` und `bun`.
+  - Umziehen auf eigenes git damit man gescheit mit der git history arbeiten kann und um eigenes AWS zu verwenden, erstmal nur lambda, CI/CD.
+  - Testing aller Moeglichkeiten mit einem einfachen Grundszenario
+    - Per JSON file?
+    - Sinnvoll automatisierbar?
+- B
+  - Refactoring: Ein Ordner pro custom intent.
+  - Refactorring: `chat_gpt.py` würde mit mehr OOP besser aussehen und im Umgang fehlerunanfälliger sein.
+  - i18n und informationen aus den model definitionen in `skill-package/interactionModels` verwenden um Antworten von Alexa zu bilden, die z. B. den Skill namen beinhalten.
+  - Herausfinden ob es möglich ist im `CancelIntentHandler` (bzw. allgemein) herauszufinden welcher der vorherige Intent gewesen ist. Ich glaube aber es gibt halt einfach keinen `context` sondern nur `requests`. Ich könnte ggf. einen interceptor erstellen der jeden intent auf session Dauer in ein array speichert, oder eben nur den letzten und den aktuellen. Das kann es eigentlich echt nicht sein, ärgerlich...
+  - Ich bin mir ehrlich gesagt nicht ganz sicher was der Vorteil dabei ist die Nachrichten in der session zu speichern. Es würde ebenso gehen sie in einem Python Objekt (in dem runtime prozess zu speichern), ist es möglich das dabei etwas schieflaufen kann, wenn auch selten?
+- C
+  - Ermögliche mehrere chats
+  - Die Länge der Antwort sollte ggf. anpassbar sein (erhöhen \[verdoppeln\] & setzen \[kurz,mittel,lang\])
+  - `AMAZON.FallbackIntent` testen
+  - DynamoDB nutzen um die d dauerhaft zu speichern
+  - Features hinzufügen (DRAFT):
+    - Chats automatisch Titel geben (generiert per GPT)
+    - Alle chats abrufbar machen (Index und Titel vorlesen)
+    - Alle chats löschen
+    - Aktuellen chat löschen
+    - Aktuellen chat umbennennen
+  - Auf für mehrere Nutzer verwendbar machen. Einfache Bedienung!
+  - Chats per AI in grobe Themen einordnen und darüber ansteuerbar machen
+  - Themen erstellbar machen, wie zum Beispiel "Kochen" und es ermöglichen chats darin einzuordnen
+- D
+  - Für die Erfahrung einen Webservice erstellen, hosten, verwenden und ggf. JS SDK und bun als runtime verwenden (refactoring)
